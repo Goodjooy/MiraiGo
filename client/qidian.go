@@ -4,7 +4,7 @@ package client
 import (
 	"bytes"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -145,7 +145,7 @@ func (c *QQClient) bigDataRequest(subCmd uint32, req proto.Message) ([]byte, err
 		return nil, errors.Wrap(err, "request error")
 	}
 	defer rsp.Body.Close()
-	rspBody, _ := io.ReadAll(rsp.Body)
+	rspBody, _ := ioutil.ReadAll(rsp.Body)
 	r := binary.NewReader(rspBody)
 	r.ReadByte()
 	l1 := int(r.ReadInt32())

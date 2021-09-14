@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"compress/gzip"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"strings"
 )
@@ -24,7 +25,7 @@ func HttpGetBytes(url, cookie string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	return io.ReadAll(body)
+	return ioutil.ReadAll(body)
 }
 
 func HttpPostBytes(url string, data []byte) ([]byte, error) {
@@ -39,7 +40,7 @@ func HttpPostBytes(url string, data []byte) ([]byte, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +48,7 @@ func HttpPostBytes(url string, data []byte) ([]byte, error) {
 		buffer := bytes.NewBuffer(body)
 		r, _ := gzip.NewReader(buffer)
 		defer r.Close()
-		unCom, err := io.ReadAll(r)
+		unCom, err := ioutil.ReadAll(r)
 		return unCom, err
 	}
 	return body, nil
@@ -72,7 +73,7 @@ func HttpPostBytesWithCookie(url string, data []byte, cookie string, contentType
 		return nil, err
 	}
 	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +81,7 @@ func HttpPostBytesWithCookie(url string, data []byte, cookie string, contentType
 		buffer := bytes.NewBuffer(body)
 		r, _ := gzip.NewReader(buffer)
 		defer r.Close()
-		unCom, err := io.ReadAll(r)
+		unCom, err := ioutil.ReadAll(r)
 		return unCom, err
 	}
 	return body, nil

@@ -6,6 +6,7 @@ import (
 	binary2 "encoding/binary"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net"
 	"net/http"
 	"os"
@@ -457,7 +458,7 @@ func (c *QQClient) excitingUploadStream(stream io.ReadSeeker, cmdId int32, ticke
 		if err != nil {
 			return nil, errors.Wrap(err, "request error")
 		}
-		body, _ := io.ReadAll(rsp.Body)
+		body, _ := ioutil.ReadAll(rsp.Body)
 		_ = rsp.Body.Close()
 		r := binary.NewReader(body)
 		r.ReadByte()
